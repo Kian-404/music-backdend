@@ -167,4 +167,3 @@ $ npm test
 ## License
 
 [The MIT License (MIT)](https://github.com/Binaryify/NeteaseCloudMusicApi/blob/master/LICENSE)
-# music-backdend
