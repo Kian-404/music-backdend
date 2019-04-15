@@ -21,7 +21,7 @@ module.exports = (query, request) => {
             return response
         }
         else{
-            response.status = 404
+            response.status = 200
             response.body = {success: false, message: '亲爱的,暂无版权'}
             return Promise.reject(response)
         }

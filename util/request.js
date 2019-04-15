@@ -31,6 +31,7 @@ const chooseUserAgent = ua => {
 }
 
 const createRequest = (method, url, data, options) => {
+  // console.log(options);
   return new Promise((resolve, reject) => {
     let headers = { 'User-Agent': chooseUserAgent(options.ua) }
     if (method.toUpperCase() == 'POST')
@@ -65,6 +66,7 @@ const createRequest = (method, url, data, options) => {
         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'
       url = 'https://music.163.com/api/linux/forward'
     }
+    // console.log(data);
 
     const answer = { status: 500, body: {}, cookie: [] }
     request(

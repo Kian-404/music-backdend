@@ -8,6 +8,7 @@ const exec = require('child_process').exec
 const cache = require('apicache').middleware
 
 // version check
+// 获取最新的版本号，与现在的版本作对比
 exec('npm info NeteaseCloudMusicApi version', (err, stdout, stderr) => {
     if(!err){
         let version = stdout.trim()
@@ -60,18 +61,21 @@ const special = {
     'personal_fm.js': '/personal_fm'
 }
 
+// 为module下的每个文件都做一次路由检测
 fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
     if(!(/\.js$/i.test(file))) return
     let route = (file in special) ? special[file] : '/' + file.replace(/\.js$/i, '').replace(/_/g, '/')
     let question = require(path.join(__dirname, 'module', file))
-    
+    // console.log(route);
     app.use(route, (req, res) => {
+        // console.log(req);
         let query = Object.assign({}, req.query, req.body, {cookie: req.cookies})
         question(query, request)
         .then(answer => {
             console.log('[OK]', decodeURIComponent(req.originalUrl))
             res.append('Set-Cookie', answer.cookie)
             res.status(answer.status).send(answer.body)
+            // console.log(answer.body)
         })
         .catch(answer => {
             console.log('[ERR]', decodeURIComponent(req.originalUrl))
